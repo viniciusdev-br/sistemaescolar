@@ -1,0 +1,25 @@
+Navegação:
+yarn add @react-navigation/native
+
+Dependencias:
+expo install react-native-gesture-handler react-native-reanimated react-native-screens react-native-safe-area-context @react-native-community/masked-view
+
+Navegação stack:
+yarn add @react-navigation/stack
+
+Navegação botoes de baixo:
+yarn add @react-navigation/bottom-tabs@next
+
+Icones para navegação:
+npm install --save react-native-vector-icons
+
+Instalar o sever de front-end...
+
+Biblioteca svg para o grafico:
+expo install react-native-svg
+
+A biblioteca para o grafico:
+yarn add react-native-svg-charts
+
+Instalar styled components/native
+
