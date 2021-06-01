@@ -20,6 +20,9 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.ufpa.projetoescola",
+      "googleServicesFile": "./google-services.json",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"

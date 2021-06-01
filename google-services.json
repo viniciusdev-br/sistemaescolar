@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "996644081597",
+    "project_id": "projeto-terzinha",
+    "storage_bucket": "projeto-terzinha.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996644081597:android:812e9f89bf791cc4388cd4",
+        "android_client_info": {
+          "package_name": "com.ufpa.projetoescola"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "996644081597-e0mgblkcdm3ge4u5090hoijakinjhpjg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYQYMmpYm-2xheC2bHYuoA9scfB_cjYQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "996644081597-e0mgblkcdm3ge4u5090hoijakinjhpjg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

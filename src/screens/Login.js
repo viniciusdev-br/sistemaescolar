@@ -1,7 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Image, TouchableOpacity, Text, TextInput, Button } from 'react-native';
+import auth from '@react-native-firebase/auth';
 
 export  default function Login( { navigation } ){
+
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#85b2dd' }}>
 
