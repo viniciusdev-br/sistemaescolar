@@ -7,9 +7,10 @@ import Home from './src/screens/Home';
 const Stack = createStackNavigator();
 
 export default function App() {
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Login">  
         <Stack.Screen 
           name="Login" 
           component={Login}

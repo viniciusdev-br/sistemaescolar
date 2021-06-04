@@ -9,7 +9,7 @@ export default function Noticias(){
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
 
-    async function loadPage(pageNumber = page){
+   /* async function loadPage(pageNumber = page){
         if (total && pageNumber > total) return;
 
         const response = await fetch(
@@ -26,10 +26,10 @@ export default function Noticias(){
     useEffect(() =>{
         loadPage();
     }, []);
-
+*/
     return(
         <View>
-            <FlatList
+          {/* <FlatList
                 data={feed}
                 keyExtractor={post => String(post.id)}
                 onEndReached={() => loadPage()}
@@ -49,7 +49,7 @@ export default function Noticias(){
 
                     </Post>
                 )}
-            />
+            />*/}
         </View>
     );
 }

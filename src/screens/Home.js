@@ -1,8 +1,9 @@
-import React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Entypo from 'react-native-vector-icons/Entypo';
+import firestore from '@react-native-firebase/firestore';
 
 import Noticias from './Noticias';
 import Frequencia from './Frequencia';
@@ -10,12 +11,28 @@ import Turma from './Turma';
 import Refeitorio from './Refeitorio';
 import Notas from './Notas';
 
-
 const Tab = createBottomTabNavigator();
 
 export default function Home(){
+
+    useEffect(()=> {
+        /*const userDocument = firestore().collection("users").doc(userId).onSnapshot(documentSnapshot => {
+            alert('user data: ', documentSnapshot.data());
+        });
+        return () => subscriber();*/
+        const fetchPosts =  async() => {
+            try{
+                firestore().collection('users').get().then((querySnapshot) => {
+                    alert('Total de alunos: ', querySnapshot.size);
+                });
+            }catch(e){
+                alert(e);
+            }
+        }
+    });
+
     return (
-        <Tab.Navigator         >
+        <Tab.Navigator>
             <Tab.Screen 
                 name="Noticas" 
                 component={Noticias} 
