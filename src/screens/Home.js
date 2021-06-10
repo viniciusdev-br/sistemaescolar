@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet } from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -13,7 +13,9 @@ import Notas from './Notas';
 
 const Tab = createBottomTabNavigator();
 
-export default function Home(){
+export default function Home({route}){
+
+    var idAluno = route.params.userId;
 
     useEffect(()=> {
         /*const userDocument = firestore().collection("users").doc(userId).onSnapshot(documentSnapshot => {
@@ -41,19 +43,13 @@ export default function Home(){
                 }}
             />
             <Tab.Screen 
-                name="Frequencia" 
+                name="Frenquência"
                 component={Frequencia} 
+                initialParams={{ user: idAluno }}
                 options={{
                     tabBarIcon: () => (<Icon name="poll" size={30} color="#2E2FBF" />)
                 }}
                 />   
-            <Tab.Screen 
-                name="Turma" 
-                component={Turma}
-                options={{
-                    tabBarIcon: () => (<Icon name="marker" size={30} color="#2E2FBF" />)
-                }}
-            />
             <Tab.Screen 
                 name="Refeitorio" 
                 component={Refeitorio} 

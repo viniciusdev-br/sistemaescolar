@@ -9,6 +9,8 @@ export  default function Login( { navigation } ){
     const [password, setPassword] = useState('');
     const [initializing, setInitializing] = useState(true);
     const [user, setUser] = useState(false);
+    const [nome, setNome] = useState('');
+    const [diasIncompletos, setDiasIncompletos] = useState(0);
 
     function onAuthStateChanged(user) {
         setUser(user);
@@ -20,6 +22,12 @@ export  default function Login( { navigation } ){
         return subscriber; // unsubscribe on unmount
     }, []);
 
+    {/*useEffect(() => {
+        firestore().collection("users").doc(String(user.uid)).onSnapshot( doc => {
+            setNome(doc.data().nome)
+        })
+    })*/}
+
     const signIn = () => {
         auth().signInWithEmailAndPassword(email,password).catch((e) => {
             console.log(e);
@@ -30,12 +38,14 @@ export  default function Login( { navigation } ){
     const signOut = () => {
         auth().signOut();
     };
+    //Criando uma referência para manipular os dados:
+    //const userData = firestore().collection("users").doc(String(user.uid))
 
-    const data = {
-        name: 'Los Angeles',
-        state: 'CA',
-        country: 'USA'
-      };
+    //const data = {
+    //  name: 'Belém',
+    //  state: 'PA',
+    // country: 'Brasil'
+    //};
 
     if (initializing) return null;
 
@@ -75,12 +85,15 @@ export  default function Login( { navigation } ){
             </View>
         );
     }else{
-        navigation.navigate('Home');
+        navigation.navigate('Home', {
+            //user.uid
+            userId: user.uid,
+        });
     }
     return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor:'#85b2dd' }}>
 
-            <Text style={{fontSize:20, color:"#FFFFFF"}} >Olá {user.uid}</Text>
+            <Text style={{fontSize:20, color:"#FFFFFF"}} >Olá {user.email}</Text>
 
             <Text style={{fontSize:16, color:"#FFFFFF"}} >Para fazer o logout aperte no botão abaixo :)</Text>
 
@@ -95,7 +108,7 @@ export  default function Login( { navigation } ){
                 Voltar para a Home ;)
                 </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={{marginTop:20, backgroundColor: '#2E2FBF', width: "50%", borderRadius: 20}} onPress={()=> firestore().collection('users').add({
+            {/*<TouchableOpacity style={{marginTop:20, backgroundColor: '#2E2FBF', width: "50%", borderRadius: 20}} onPress={()=> firestore().collection('users').add({
                 faltas: 10,
                 idade: 21,
                 nome:"Victor Botelho",
@@ -106,16 +119,7 @@ export  default function Login( { navigation } ){
                 <Text style={{fontSize:18, textAlign:'center', color:'white', padding: 7}}>
                 Adicione um novo usuário ;=)
                 </Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                style={{marginTop:20, backgroundColor: '#2E2FBF', width: "50%", borderRadius: 20}} 
-                onPress={()=> 
-                    firestore().collection('users').doc(String(user.uid)).set(data)
-                }>
-                <Text style={{fontSize:14, textAlign:'center', color:'white', padding: 7}}>
-                    Veja quantos usuários temos na rede
-                </Text>
-            </TouchableOpacity>
+        </TouchableOpacity>*/}
         </View>
     );
 }

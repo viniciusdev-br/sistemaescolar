@@ -24,11 +24,13 @@
     "react-dom": "16.13.1",
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "~1.10.2",
+    "react-native-paper": "^4.9.1",
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
     "react-native-svg": "12.1.0",
     "react-native-svg-charts": "^5.4.0",
+    "react-native-table-component": "^1.2.1",
     "react-native-unimodules": "~0.13.3",
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
@@ -39,6 +41,6 @@
     "json-server": "^0.16.3"
   },
   "private": true,
-  "name": "ProjetoNovo",
+  "name": "projetonovo",
   "version": "1.0.0"
 }

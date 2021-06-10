@@ -1,18 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { PieChart } from 'react-native-svg-charts';
-
+import firestore from '@react-native-firebase/firestore';
 /*
   O banco de dados do aluno irá fornecer o percentual de faltas que o aluno têm
   Caso haja uma falta, será possível ver data, e horário da falta do aluno
 */
+export default function Frequencia({route}){
+  const userId = route.params.user;
+  const [diasIncompletos, setDiasIncompletos] = useState(0);
 
-/*function corSlice() {
-  return(1);
-}*/
-
-export default function Frequencia(){
-  const data = [89,11];
+  useEffect(() => {
+    firestore().collection("users").doc(userId).onSnapshot( doc => {
+      setDiasIncompletos(((200 - doc.data().diasIncompletos)*100)/200)
+    });
+  });
+  
+  //var user = firebase.auth().currentUser; 
+  const data = [diasIncompletos,100-diasIncompletos];
+  
   const pieData = data.map((value, index) => ({
     value,
     key: `${index}-${value}`,
@@ -27,7 +33,7 @@ export default function Frequencia(){
         data={pieData}     
       />
       <View style={styles.chartPresent}>
-        <Text style={{color:'#FFFFFF', fontSize:20}}>89% de presença.</Text>
+        <Text style={{color:'#FFFFFF', fontSize:20}}>{diasIncompletos}% de presença</Text>
       </View>
 
       <View style={{
