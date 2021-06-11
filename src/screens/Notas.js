@@ -1,80 +1,54 @@
-import React from 'react'
-import { SafeAreaView, View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import React, {useEffect, useState} from 'react'
+import {View, FlatList, StyleSheet, Text, StatusBar } from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
-export default function Notas(){
+export default function Notas({route}){
+  const userId = route.params.user;
+  //state de um vetor para receber disciplinas do Firestore
+  const [disciplinas, setDisciplinas] = useState('[]');
 
-    const DATA = [
-        {
-          id: '1',
-          title: 'Português:',
-        },
-        {
-          id: '2',
-          title: 'Matemática:',
-        },
-        {
-          id: '3',
-          title: 'Fisíca:',
-        },{
-            id: '4',
-            title: 'Química: ',
-        },
-        {
-          id: '5',
-          title: 'Biologia:',
-        },
-        {
-          id: '6',
-          title: 'Geografia:',
-        },{
-            id: '7',
-            title: 'História:',
-        },
-        {
-          id: '8',
-          title: 'Artes:',
-        },
-        {
-          id: '9',
-          title: 'Ciencias da Religião:',
-        },{
-            id: '10',
-            title: 'Ed. Física:',
-        },
-        {
-          id: '11',
-          title: 'Informática:',
-        },
-    ];
+//  useEffect(()=>{
+//    firestore().collection("users").doc(userId).onSnapshot( doc => {
+//      
+//    });
+//  });
 
-    const Item = ({ title }) => (
-        <View style={styles.item}>
-          <Text style={styles.title}>{title}</Text>
-        </View>
-    );
+  const cursos = [
+    {name: 'Português', nota: 0},
+    {name: 'Matenática', nota: 1},
+    {name: 'Física', nota: 2},
+    {name: 'Química', nota: 3},
+    {name: 'Biologia', nota: 4},
+    {name: 'História', nota: 5},
+    {name: 'Geografia', nota: 6},
+    {name: 'Ciênc. da Religião', nota: 7},
+    {name: 'Ed. Física', nota: 8},
+    {name: 'Informática', nota: 9},
+  ]
 
-    const renderItem = ({ item }) => (
-        <Item title={item.title} />
-    );
+  function User({nameCurso}, {notaCurso}) {
     return(
-        <SafeAreaView style={styles.container}>
-            <View style={{alignSelf:'center'}}>
-                <Text style={{fontSize:25, marginBottom:15}}>Disciplinas:</Text>
-            </View>
-            <FlatList
-                data={DATA}
-                renderItem={renderItem}
-                keyExtractor={item => item.id}
-            />
-        </SafeAreaView>
+      <View style={styles.item}>
+        <Text style={styles.texto}>{nameCurso}: {notaCurso}</Text>
+      </View>
     );
+  }
 
+  return(
+    <View style={styles.container}>
+      <Text style={{fontSize:20, alignSelf:"center", marginBottom: 10, color:'#2E2FBF'}}>Notas de cada disciplina  : )</Text>
+      <FlatList 
+        data={cursos}
+        renderItem={({item}) => <User nameCurso={item.name} notaCurso={item.nota}/>}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      marginTop: StatusBar.currentHeight || 0,
+      marginTop: 15,
     },
     item: {
       backgroundColor: '#85B2DD',
@@ -83,7 +57,7 @@ const styles = StyleSheet.create({
       marginHorizontal: 16,
       borderRadius: 5,
     },
-    title: {
+    texto: {
       fontSize: 16,
       color: 'white',
     },

@@ -60,6 +60,7 @@ export default function Home({route}){
             <Tab.Screen 
                 name="Notas" 
                 component={Notas} 
+                initialParams={{ user: idAluno }}
                 options={{
                     tabBarIcon: () => (<Icon name="pray" size={30} color="#2E2FBF" />)
                 }}
