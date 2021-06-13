@@ -11,31 +11,21 @@ export default function Notas({route}){
   const [turma,setTurma] = useState('EN01208');
   const [tituloTurma,setTituloTurma] = useState('');
   const [nome, setNome] = useState('');
-  const [firtsAvaliacao, setFirstAvaliation] = useState([]);
-  const [secondAvaliacao, setSecondAvaliation] = useState([]);
-  const [thirdAvaliacao, setThirdAvaliation] = useState([]);
+  const [firtsAvaliacao, setFirstAvaliaticao] = useState([]);
+  const [secondAvaliacao, setSecondAvaliaticao] = useState([]);
+  const [thirdAvaliacao, setThirdAvaliaticao] = useState([]);
   const [forAvaliacao, setForAvaliacao] = useState([]);
-  //const cursos = ['Portugues', 'matematica', 'Fisíca', 'Quimica', 'Biologia','Portugues', 'matematica', 'Fisíca', 'Quimica', 'Biologia','Portugues', 'matematica', 'Fisíca', 'Quimica', 'Biologia']
-  /*const tableData = [
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-    ['1', '2', '3','10'],
-  ];*/
 
   useEffect(()=>{
     firestore().collection("users").doc(userId).onSnapshot( doc => {
       setAno(doc.data().ano);
       setTurma(doc.data().turma);
       setNome(doc.data().nome);
-      setFirstAvaliation(doc.data().firtsAvaliacao);
-      setSecondAvaliation(doc.data().secondAvaliacao);
+
+      setFirstAvaliaticao(doc.data().firtsAvaliacao);
+      setSecondAvaliaticao(doc.data().secondAvaliacao);
+      setThirdAvaliaticao(doc.data().thirdAvaliacao);
+      setForAvaliacao(doc.data().forAvaliacao);
     });
     firestore().collection(ano).doc(turma).onSnapshot( doc => {
       setTituloTurma(doc.data().titleTurma);
@@ -56,8 +46,8 @@ export default function Notas({route}){
           {/*Colunas para cada avaliação do aluno*/}
           <Col data={firtsAvaliacao} style={styles.row} textStyle={styles.text}/>
           <Col data={secondAvaliacao} style={styles.row} textStyle={styles.text}/>
-          <Col data={disciplinas} style={styles.row} textStyle={styles.text}/>
-          <Col data={disciplinas} style={styles.row} textStyle={styles.text}/>
+          <Col data={thirdAvaliacao} style={styles.row} textStyle={styles.text}/>
+          <Col data={forAvaliacao} style={styles.row} textStyle={styles.text}/>
         </TableWrapper>
 
       </Table>
