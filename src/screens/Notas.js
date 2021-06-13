@@ -11,6 +11,8 @@ export default function Notas({route}){
   const [turma,setTurma] = useState('EN01208');
   const [tituloTurma,setTituloTurma] = useState('');
   const [nome, setNome] = useState('');
+  const [idade, setidade] = useState('');
+
   const [firtsAvaliacao, setFirstAvaliaticao] = useState([]);
   const [secondAvaliacao, setSecondAvaliaticao] = useState([]);
   const [thirdAvaliacao, setThirdAvaliaticao] = useState([]);
@@ -21,6 +23,7 @@ export default function Notas({route}){
       setAno(doc.data().ano);
       setTurma(doc.data().turma);
       setNome(doc.data().nome);
+      setidade(doc.data().idade);
 
       setFirstAvaliaticao(doc.data().firtsAvaliacao);
       setSecondAvaliaticao(doc.data().secondAvaliacao);
@@ -38,9 +41,11 @@ export default function Notas({route}){
     
     <ScrollView>
       <Text style={styles.titleAluno}>Turma {tituloTurma} | {nome}</Text>
+      <Text style={styles.titleAlunoIdade}>{idade} anos</Text>
+      
       <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
         <Row data={tableHead} style={styles.head} textStyle={{fontWeight: 'bold', textAlign: 'center', color:'#2E2FBF'}} />
-        <TableWrapper style={styles.wrapper}>
+        <Table style={styles.wrapper}>
           {/*Coluna com disciplinas*/}
           <Col data={disciplinas} style={styles.title}  textStyle={styles.text}/>
           {/*Colunas para cada avaliação do aluno*/}
@@ -48,7 +53,7 @@ export default function Notas({route}){
           <Col data={secondAvaliacao} style={styles.row} textStyle={styles.text}/>
           <Col data={thirdAvaliacao} style={styles.row} textStyle={styles.text}/>
           <Col data={forAvaliacao} style={styles.row} textStyle={styles.text}/>
-        </TableWrapper>
+        </Table>
 
       </Table>
     </ScrollView>
@@ -63,30 +68,35 @@ const styles = StyleSheet.create({
     },
     titleAluno: {
       alignSelf: 'center',
-      marginVertical: 8,
+      marginTop: 8,
+      fontSize: 18,
+      color:'#85B2DD',
+      fontWeight:'bold',
+    },
+    titleAlunoIdade: {
+      alignSelf: 'center',
+      marginTop: 8,
       fontSize: 18,
       color:'#85B2DD',
       fontWeight:'bold',
     },
     wrapper: { 
-      flexDirection: 'row' 
+      flexDirection: 'row',
     },
-    title: { 
-      flex: 1, 
-      backgroundColor: '#f6f8fa',
+    title: {
+      flex:1,
+      backgroundColor: 'white',
       height: '100%',
     },
     row: {  
       height: '100%',
+      backgroundColor: 'white',
     },
     text: { 
       textAlign: 'center',
     },
-    headCursos: {  
-      width: 100,
-      backgroundColor: '#f1f8ff',
-    },
     head: {
       height: 40,
+      backgroundColor: 'white',
     },
 });
