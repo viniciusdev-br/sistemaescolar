@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     titleAlunoIdade: {
       alignSelf: 'center',
       marginTop: 8,
+      marginBottom: 13,
       fontSize: 18,
       color:'#85B2DD',
       fontWeight:'bold',
