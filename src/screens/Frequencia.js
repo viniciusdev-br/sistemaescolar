@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { PieChart } from 'react-native-svg-charts';
 import firestore from '@react-native-firebase/firestore';
 /*
@@ -9,11 +9,15 @@ import firestore from '@react-native-firebase/firestore';
 export default function Frequencia({route}){
   const userId = route.params.user;
   const [diasIncompletos, setDiasIncompletos] = useState(0);
+  const [ultimasFaltas, setUltimasFaltas] = useState([]);
 
   useEffect(() => {
     firestore().collection("users").doc(userId).onSnapshot( doc => {
       setDiasIncompletos(((200 - doc.data().diasIncompletos)*100)/200)
     });
+    firestore().collection("users").doc(userId).onSnapshot( doc => {
+      setUltimasFaltas(doc.data().dataFaltas);
+    })
   });
   
   //var user = firebase.auth().currentUser; 
@@ -51,18 +55,17 @@ export default function Frequencia({route}){
       </View>
 
       <View style={styles.tabelaFaltas}>
-        <Text style={styles.faltas}>11/04/2012</Text>
+        <Text style={styles.faltas}>{ultimasFaltas[0].toDate().toDateString()}</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>11/04/2012</Text>
+        <Text style={styles.faltas}>{ultimasFaltas[1].toDate().toDateString()}</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>11/04/2012</Text>
+        <Text style={styles.faltas}>{ultimasFaltas[2].toDate().toDateString()}</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>11/04/2012</Text>
+        <Text style={styles.faltas}>{ultimasFaltas[3].toDate().toDateString()}</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>11/04/2012</Text>
+        <Text style={styles.faltas}>{ultimasFaltas[4].toDate().toDateString()}</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>11/04/2012</Text>
-        <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
+        <Text style={styles.faltas}>{ultimasFaltas[5].toDate().toDateString()}</Text>
       </View>
     </View>
   );
@@ -100,5 +103,12 @@ const styles = StyleSheet.create({
     faltas:{
       color: '#FFFFFF',
       fontSize: 18,
-    }
+    },
+    item: {
+      backgroundColor: '#85B2DD',
+      padding: 13,
+      marginVertical: 8,
+      marginHorizontal: 16,
+      borderRadius: 5,
+    },
   });

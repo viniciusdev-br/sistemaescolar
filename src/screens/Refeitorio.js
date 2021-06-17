@@ -12,10 +12,12 @@ export default function Refeitorio(){
     const [food, setFood] = useState("");
     const [notasFood, setNotasFood] = useState([]);
     const [votoConfirmed, setVotoConfirmed] = useState(false);
+    const [imageFood, setImageFood] = useState('');
 
     useEffect(()=>{
         firestore().collection("refeitorio").doc("lanche").onSnapshot( doc => {
             setFood(doc.data().foodNow);
+            setImageFood(doc.data().imageFood);
         })
         firestore().collection("refeitorio").doc("avaliacao").onSnapshot( doc => {
             setLike(doc.data().like)
