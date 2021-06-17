@@ -1,55 +1,113 @@
-import React, {useState} from 'react'
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import Slider from '@react-native-community/slider';
-
-
+import React, {useState, useEffect} from 'react'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, SafeAreaView } from 'react-native'
+import Slider from '@react-native-community/slider'
+import NumericInput from 'react-native-numeric-input'
+import firestore from '@react-native-firebase/firestore'
 export default function Refeitorio(){
 
     const [changeColor, setChangeColor] = useState(false);
-    const [voto, setVoto] = useState("");
+    const [like, setLike] = useState(0);
+    const [noLike, setNoLike] = useState(0);
+    const [numberVoto, setNumberVoto] = useState(7.5);
+    const [food, setFood] = useState("");
+    const [notasFood, setNotasFood] = useState([]);
+    const [votoConfirmed, setVotoConfirmed] = useState(false);
 
+    useEffect(()=>{
+        firestore().collection("refeitorio").doc("lanche").onSnapshot( doc => {
+            setFood(doc.data().foodNow);
+        })
+        firestore().collection("refeitorio").doc("avaliacao").onSnapshot( doc => {
+            setLike(doc.data().like)
+            setNoLike(doc.data().noLike)
+            setNotasFood(doc.data().notas)
+        })
+    });
+
+    var votoGostei = like;
+    var votoNaoGostei = noLike;
+    var novaNota = notasFood;
     return(
-        <View style={styles.container}>
-            <Text style={styles.textTitle}>Prato do dia!</Text>
-            <Image style={styles.imageFood} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/projeto-terzinha.appspot.com/o/aroz-com-galinha.jpg?alt=media&token=7cccd367-14b6-40f2-bba1-933d499118db',}}/>
-            <Text style={styles.textNome}>Arroz com Firebase.</Text>
-            <View style={styles.likeGroup}>
-                <TouchableOpacity style={styles.btnLike} activeOpacity={0.5}
+        <SafeAreaView style={styles.container}>
+            <ScrollView>
+                <Text style={styles.textTitle}>Prato do dia!</Text>
+                <Image style={styles.imageFood} source={{uri: 'https://firebasestorage.googleapis.com/v0/b/projeto-terzinha.appspot.com/o/aroz-com-galinha.jpg?alt=media&token=7cccd367-14b6-40f2-bba1-933d499118db',}}/>
+                <Text style={styles.textNome}>{food}.</Text>
+                <Text style={{fontSize:16, alignSelf: 'center'}}>Por favor, avalie a comida depois de experimentar!</Text>
+                <View style={styles.likeGroup}>
+                    <TouchableOpacity style={styles.btnLike} activeOpacity={0.5}
+                        onPress = {() => {
+                            if (changeColor){
+                                alert("Você já votou, por favor dê uma nota também.");
+                            }else{
+                                alert("Obrigado pelo Feedback e que bom que você gostou!");
+                                votoGostei += 1;
+                                console.log(votoGostei);
+                                setChangeColor(true);
+                                firestore().collection("refeitorio").doc("avaliacao").update({like: votoGostei})
+                            }
+                        }}     
+                    >
+                        <Image style={styles.btnLikeIcon} source={require('../../assets/like-png.png')}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.btnLike} activeOpacity={0.5}
+                        onPress = {() => {
+                            if (changeColor){
+                                alert("Você já votou, por favor dê uma nota também.");
+                            }else{
+                                alert("Obrigado pelo Feedback");
+                                votoNaoGostei += 1;
+                                setChangeColor(true);
+                                firestore().collection("refeitorio").doc("avaliacao").update({noLike: votoNaoGostei})
+                            }
+                        }} 
+                    >
+                        <Image style={styles.btnNoLikeIcon} source={require('../../assets/like-png.png')}/>
+                    </TouchableOpacity>
+                </View>
+                <View style={styles.likeGroup}>
+                    <NumericInput 
+                        onChange={value => setNumberVoto(value)}
+                        minValue={5}
+                        maxValue={10}
+                        value={numberVoto}
+                        valueType='real'
+                        leftButtonBackgroundColor='#f9896d'
+                        rightButtonBackgroundColor='#219ebc' 
+                        rounded={true}
+                    />
+                    <Slider
+                        style={{width: 200, height: 50}}
+                        minimumValue={5}
+                        maximumValue={10}
+                        minimumTrackTintColor="#219ebc"
+                        maximumTrackTintColor="#2E2FBF"
+                        value={numberVoto}
+                        onValueChange={value => {
+                            setNumberVoto(value);
+                            console.log(value);
+                        }}
+                        disabled={true}
+                    />
+                </View>
+                <TouchableOpacity style={styles.btnSendVoto}
                     onPress = {() => {
-                        console.log("GOSTEI");
-                        if (changeColor){
-                            alert("Você já votou, obrigado  ; ) \nVoto: " + voto)
+                        if (votoConfirmed){
+                            alert("Você já deu uma nota: " + numberVoto)
+                        }else if(numberVoto != null){
+                            novaNota.push(numberVoto);
+                            firestore().collection("refeitorio").doc("avaliacao").update({notas: novaNota});
+                            alert("Resposta enviada");
+                            setVotoConfirmed(true);
                         }else{
-                            alert("Obrigado pelo Feedback e que bom que você gostou!");
-                            setVoto("Gostei!");
-                            setChangeColor(true);
+                            alert("Digite um número válido.")
                         }
-                    }}     
+                    }}
                 >
-                    <Image style={styles.btnLikeIcon} source={require('../../assets/like-png.png')}/>
+                    <Text style={{fontSize: 18, color:'white', fontWeight: 'bold', textAlign: 'center'}}>Enviar voto agora!</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnLike} activeOpacity={0.5}
-                    onPress = {() => {console.log("NÃO GOSTEI")
-                    if (changeColor){
-                        alert("Você já votou, obrigado  ; ) \nVoto: " + voto);
-                    }else{
-                        alert("Obrigado pelo Feedback");
-                        setVoto("Não gostei!");
-                        setChangeColor(true);
-                    }
-                }} 
-                >
-                    <Image style={styles.btnNoLikeIcon} source={require('../../assets/like-png.png')}/>
-                </TouchableOpacity>
-            </View>
-            <Slider
-                style={{width: 200, height: 40}}
-                minimumValue={0}
-                maximumValue={1}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
-            />
-        </View>
+            </ScrollView>
+        </SafeAreaView>
         
     );
 }
@@ -67,29 +125,33 @@ const styles = StyleSheet.create({
         width: '90%',
         textAlign: 'center',
         color: 'white',
-        paddingVertical: 10,
+        paddingVertical: 5,
+        marginTop: 20,
+        alignSelf: 'center'
     },
     imageFood: {
         width: '90%',
-        height: '40%',
+        height: 300,
         borderRadius: 10,
-        marginTop: 30,
+        marginTop: 10,
+        alignSelf: 'center'
     },
     textNome: {
         fontSize: 24,
         margin: 15,
+        alignSelf: 'center'
     },
     likeGroup: {
         flexDirection: 'row',
         width: '100%',
-        height: '15%',
-        backgroundColor: '#caffbf',
+        height: 80,
         justifyContent: 'center',
         padding: 10,
+        marginBottom: 10
     },
     btnLike: {
-        width: '20%',
-        height: '100%',
+        width: 80,
+        height: 80,
         borderRadius: 100,
         backgroundColor: 'white',
         marginHorizontal: 10
@@ -103,5 +165,13 @@ const styles = StyleSheet.create({
         width: '90%',
         height: '90%',
         transform: [{ rotate: '180deg'}]
+    },
+    btnSendVoto: {
+        backgroundColor: '#2E2FBF',
+        width: '50%',
+        borderRadius: 7,
+        padding: 10,
+        alignSelf: 'center',
+        marginBottom: 15
     }
 });
