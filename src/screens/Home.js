@@ -7,7 +7,6 @@ import firestore from '@react-native-firebase/firestore';
 
 import Noticias from './Noticias';
 import Frequencia from './Frequencia';
-import Turma from './Turma';
 import Refeitorio from './Refeitorio';
 import Notas from './Notas';
 
@@ -17,29 +16,13 @@ export default function Home({route}){
 
     var idAluno = route.params.userId;
 
-    useEffect(()=> {
-        /*const userDocument = firestore().collection("users").doc(userId).onSnapshot(documentSnapshot => {
-            alert('user data: ', documentSnapshot.data());
-        });
-        return () => subscriber();*/
-        const fetchPosts =  async() => {
-            try{
-                firestore().collection('users').get().then((querySnapshot) => {
-                    alert('Total de alunos: ', querySnapshot.size);
-                });
-            }catch(e){
-                alert(e);
-            }
-        }
-    });
-
     return (
         <Tab.Navigator>
             <Tab.Screen 
                 name="Noticas" 
                 component={Noticias} 
                 options={{
-                    tabBarIcon: () => (<Entypo name="news" size={30} color="#2E2FBF" />)
+                    tabBarIcon: () => (<Entypo name="news" size={30} color="#2E2FBF" />),
                 }}
             />
             <Tab.Screen 

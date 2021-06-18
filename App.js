@@ -19,7 +19,7 @@ export default function App() {
           name="Home"
           component={Home}
           options={{
-            title:"Página Principal", headerTitleAlign:"center", headerTintColor:'#2E2FBF'
+            title:"My School", headerTitleAlign:"center", headerTintColor:'#2E2FBF'
           }}
         />
       </Stack.Navigator>

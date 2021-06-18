@@ -56,7 +56,7 @@ export  default function Login( { navigation } ){
                 <Image source={require('../../assets/login-image.png')} style={styles.image}/>
     
                 <View style={styles.backTitulo}>
-                    <Text style={styles.titulo}>Quem é você?</Text>
+                    <Text style={styles.titulo}>My School Hand</Text>
                 </View>
     
                 <Text style={{color: 'white', fontSize:18}}>Email:</Text>

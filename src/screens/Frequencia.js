@@ -55,17 +55,17 @@ export default function Frequencia({route}){
       </View>
 
       <View style={styles.tabelaFaltas}>
-        <Text style={styles.faltas}>{ultimasFaltas[0].toDate().toDateString()}</Text>
+        <Text style={styles.faltas}>27/05/2021</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>{ultimasFaltas[1].toDate().toDateString()}</Text>
+        <Text style={styles.faltas}>28/05/2021</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>{ultimasFaltas[2].toDate().toDateString()}</Text>
+        <Text style={styles.faltas}>29/05/2021</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>{ultimasFaltas[3].toDate().toDateString()}</Text>
+        <Text style={styles.faltas}>30/05/2021</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>{ultimasFaltas[4].toDate().toDateString()}</Text>
+        <Text style={styles.faltas}>31/05/2021</Text>
         <View style={{height:1, backgroundColor:"#FFFFFF", width:200}}></View>
-        <Text style={styles.faltas}>{ultimasFaltas[5].toDate().toDateString()}</Text>
+        <Text style={styles.faltas}>01/06/2021</Text>
       </View>
     </View>
   );

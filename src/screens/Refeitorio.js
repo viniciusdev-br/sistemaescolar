@@ -46,7 +46,6 @@ export default function Refeitorio(){
                                 votoGostei += 1;
                                 console.log(votoGostei);
                                 setChangeColor(true);
-                                firestore().collection("refeitorio").doc("avaliacao").update({like: votoGostei})
                             }
                         }}     
                     >
@@ -59,8 +58,7 @@ export default function Refeitorio(){
                             }else{
                                 alert("Obrigado pelo Feedback");
                                 votoNaoGostei += 1;
-                                setChangeColor(true);
-                                firestore().collection("refeitorio").doc("avaliacao").update({noLike: votoNaoGostei})
+                                setChangeColor(true);                                
                             }
                         }} 
                     >
@@ -101,6 +99,8 @@ export default function Refeitorio(){
                             firestore().collection("refeitorio").doc("avaliacao").update({notas: novaNota});
                             alert("Resposta enviada");
                             setVotoConfirmed(true);
+                            firestore().collection("refeitorio").doc("avaliacao").update({noLike: votoNaoGostei})
+                            firestore().collection("refeitorio").doc("avaliacao").update({like: votoGostei})
                         }else{
                             alert("Digite um número válido.")
                         }
